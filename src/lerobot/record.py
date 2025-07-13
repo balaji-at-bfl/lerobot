@@ -239,7 +239,8 @@ def record_loop(
 
         # Action can eventually be clipped using `max_relative_target`,
         # so action actually sent is saved in the dataset.
-        sent_action = robot.send_action(action)
+        sent_action = robot.send_actio
+        n(action)
 
         if dataset is not None:
             action_frame = build_dataset_frame(dataset.features, sent_action, prefix="action")
@@ -270,6 +271,7 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
     dataset_features = {**action_features, **obs_features}
 
     if cfg.resume:
+
         dataset = LeRobotDataset(
             cfg.dataset.repo_id,
             root=cfg.dataset.root,
@@ -361,5 +363,5 @@ def record(cfg: RecordConfig) -> LeRobotDataset:
     return dataset
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     record()

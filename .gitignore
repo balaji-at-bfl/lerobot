@@ -20,9 +20,13 @@ logs
 tmp
 wandb
 
+#models
+models
+
 # Data
 data
 outputs
+datasets
 
 # Apple
 .DS_Store
@@ -173,3 +177,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+#datasets
+latest-so101arm-data

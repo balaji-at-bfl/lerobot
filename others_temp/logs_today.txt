@@ -1,0 +1,618 @@
+lerobot) bfl3@BFLMACHINE:~/bfl_works/new_lerobot/lerobot$ python -m lerobot.scripts.train   --policy.path=smolvla_base   --dataset.repo_id=/home/bfl3/bfl_works/new_lerobot/lerobot/latest-so101arm-data-backup   --batch_size=64   --steps=20000   --output_dir=outputs/train/my_smolvla1   --job_name=my_smolvla_training1   --policy.device=cuda   --wandb.enable=false --policy.push_to_hub=false
+WARNING 2025-07-10 11:50:27 deo_utils.py:36 'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+WARNING 2025-07-10 11:50:27 deo_utils.py:36 'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+INFO 2025-07-10 11:50:28 ts/train.py:111 {'batch_size': 64,
+ 'dataset': {'episodes': None,
+             'image_transforms': {'enable': False,
+                                  'max_num_transforms': 3,
+                                  'random_order': False,
+                                  'tfs': {'brightness': {'kwargs': {'brightness': [0.8,
+                                                                                   1.2]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'contrast': {'kwargs': {'contrast': [0.8,
+                                                                               1.2]},
+                                                       'type': 'ColorJitter',
+                                                       'weight': 1.0},
+                                          'hue': {'kwargs': {'hue': [-0.05,
+                                                                     0.05]},
+                                                  'type': 'ColorJitter',
+                                                  'weight': 1.0},
+                                          'saturation': {'kwargs': {'saturation': [0.5,
+                                                                                   1.5]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'sharpness': {'kwargs': {'sharpness': [0.5,
+                                                                                 1.5]},
+                                                        'type': 'SharpnessJitter',
+                                                        'weight': 1.0}}},
+             'repo_id': '/home/bfl3/bfl_works/new_lerobot/lerobot/latest-so101arm-data-backup',
+             'revision': None,
+             'root': None,
+             'use_imagenet_stats': True,
+             'video_backend': 'pyav'},
+ 'env': None,
+ 'eval': {'batch_size': 50, 'n_episodes': 50, 'use_async_envs': False},
+ 'eval_freq': 10000,
+ 'job_name': 'my_smolvla_training1',
+ 'log_freq': 200,
+ 'num_workers': 4,
+ 'optimizer': {'betas': [0.9, 0.95],
+               'eps': 1e-08,
+               'grad_clip_norm': 10.0,
+               'lr': 0.0001,
+               'type': 'adamw',
+               'weight_decay': 1e-10},
+ 'output_dir': 'outputs/train/my_smolvla1',
+ 'policy': {'adapt_to_pi_aloha': False,
+            'add_image_special_tokens': False,
+            'attention_mode': 'cross_attn',
+            'chunk_size': 50,
+            'device': 'cuda',
+            'empty_cameras': 0,
+            'expert_width_multiplier': 0.75,
+            'freeze_vision_encoder': True,
+            'input_features': {'observation.image': {'shape': [3, 256, 256],
+                                                     'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.image2': {'shape': [3, 256, 256],
+                                                      'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.image3': {'shape': [3, 256, 256],
+                                                      'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.state': {'shape': [6],
+                                                     'type': <FeatureType.STATE: 'STATE'>}},
+            'license': None,
+            'load_vlm_weights': True,
+            'max_action_dim': 32,
+            'max_period': 4.0,
+            'max_state_dim': 32,
+            'min_period': 0.004,
+            'n_action_steps': 50,
+            'n_obs_steps': 1,
+            'normalization_mapping': {'ACTION': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'STATE': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'VISUAL': <NormalizationMode.IDENTITY: 'IDENTITY'>},
+            'num_expert_layers': 0,
+            'num_steps': 10,
+            'num_vlm_layers': 16,
+            'optimizer_betas': [0.9, 0.95],
+            'optimizer_eps': 1e-08,
+            'optimizer_grad_clip_norm': 10.0,
+            'optimizer_lr': 0.0001,
+            'optimizer_weight_decay': 1e-10,
+            'output_features': {'action': {'shape': [6],
+                                           'type': <FeatureType.ACTION: 'ACTION'>}},
+            'pad_language_to': 'max_length',
+            'prefix_length': 0,
+            'private': None,
+            'push_to_hub': False,
+            'repo_id': None,
+            'resize_imgs_with_padding': [512, 512],
+            'scheduler_decay_lr': 2.5e-06,
+            'scheduler_decay_steps': 30000,
+            'scheduler_warmup_steps': 1000,
+            'self_attn_every_n_layers': 2,
+            'tags': None,
+            'tokenizer_max_length': 48,
+            'train_expert_only': True,
+            'train_state_proj': True,
+            'type': 'smolvla',
+            'use_amp': False,
+            'use_cache': True,
+            'use_delta_joint_actions_aloha': False,
+            'vlm_model_name': 'HuggingFaceTB/SmolVLM2-500M-Video-Instruct'},
+ 'resume': False,
+ 'save_checkpoint': True,
+ 'save_freq': 5000,
+ 'scheduler': {'decay_lr': 2.5e-06,
+               'num_decay_steps': 30000,
+               'num_warmup_steps': 1000,
+               'peak_lr': 0.0001,
+               'type': 'cosine_decay_with_warmup'},
+ 'seed': 1000,
+ 'steps': 20000,
+ 'use_policy_training_preset': True,
+ 'wandb': {'disable_artifact': False,
+           'enable': False,
+           'entity': None,
+           'mode': None,
+           'notes': None,
+           'project': 'lerobot',
+           'run_id': None}}
+INFO 2025-07-10 11:50:28 ts/train.py:117 Logs will be saved locally.
+INFO 2025-07-10 11:50:28 ts/train.py:127 Creating dataset
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [00:00<00:00, 706111.78it/s]
+INFO 2025-07-10 11:50:29 ts/train.py:138 Creating policy
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+Loading  HuggingFaceTB/SmolVLM2-500M-Video-Instruct weights ...
+INFO 2025-07-10 11:50:35 modeling.py:991 We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+Reducing the number of VLM layers to 16 ...
+Loading weights from local directory
+[standardise_state_dict] 'normalize_inputs.buffer_observation_state.mean'  ←  ['normalize_inputs.so100-red_buffer_observation_state.mean', 'normalize_inputs.so100_buffer_observation_state.mean']
+[standardise_state_dict] 'normalize_inputs.buffer_observation_state.std'  ←  ['normalize_inputs.so100-red_buffer_observation_state.std', 'normalize_inputs.so100_buffer_observation_state.std']
+[standardise_state_dict] 'normalize_targets.buffer_action.mean'  ←  ['normalize_targets.so100-red_buffer_action.mean', 'normalize_targets.so100_buffer_action.mean']
+[standardise_state_dict] 'normalize_targets.buffer_action.std'  ←  ['normalize_targets.so100-red_buffer_action.std', 'normalize_targets.so100_buffer_action.std']
+[standardise_state_dict] 'unnormalize_outputs.buffer_action.mean'  ←  ['unnormalize_outputs.so100-red_buffer_action.mean', 'unnormalize_outputs.so100_buffer_action.mean']
+[standardise_state_dict] 'unnormalize_outputs.buffer_action.std'  ←  ['unnormalize_outputs.so100-red_buffer_action.std', 'unnormalize_outputs.so100_buffer_action.std']
+INFO 2025-07-10 11:50:44 ts/train.py:144 Creating optimizer and scheduler
+INFO 2025-07-10 11:50:44 ts/train.py:156 Output dir: outputs/train/my_smolvla1
+INFO 2025-07-10 11:50:44 ts/train.py:159 cfg.steps=20000 (20K)
+INFO 2025-07-10 11:50:44 ts/train.py:160 dataset.num_frames=44893 (45K)
+INFO 2025-07-10 11:50:44 ts/train.py:161 dataset.num_episodes=50
+INFO 2025-07-10 11:50:44 ts/train.py:162 num_learnable_params=99880992 (100M)
+INFO 2025-07-10 11:50:44 ts/train.py:163 num_total_params=450046212 (450M)
+INFO 2025-07-10 11:50:44 ts/train.py:202 Start offline training on a fixed dataset
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+Traceback (most recent call last):
+  File "/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/scripts/train.py", line 291, in <module>
+    train()
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/configs/parser.py", line 226, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/scripts/train.py", line 212, in train
+    train_tracker, output_dict = update_policy(
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/scripts/train.py", line 71, in update_policy
+    loss, output_dict = policy.forward(batch)
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/policies/smolvla/modeling_smolvla.py", line 461, in forward
+    losses = self.model.forward(images, img_masks, lang_tokens, lang_masks, state, actions, noise, time)
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/policies/smolvla/modeling_smolvla.py", line 851, in forward
+    (_, suffix_out), _ = self.vlm_with_expert.forward(
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/policies/smolvla/smolvlm_with_expert.py", line 445, in forward
+    att_outputs, past_key_values = self.forward_cross_attn_layer(
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/policies/smolvla/smolvlm_with_expert.py", line 317, in forward_cross_attn_layer
+    att_output = attention_interface(
+  File "/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/policies/smolvla/smolvlm_with_expert.py", line 541, in eager_attention_forward
+    probs = nn.functional.softmax(masked_att_weights, dim=-1)
+  File "/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torch/nn/functional.py", line 2137, in softmax
+    ret = input.softmax(dim)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 116.00 MiB. GPU 0 has a total capacity of 15.46 GiB of which 147.62 MiB is free. Including non-PyTorch memory, this process has 14.52 GiB memory in use. Of the allocated memory 14.05 GiB is allocated by PyTorch, and 311.54 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+(lerobot) bfl3@BFLMACHINE:~/bfl_works/new_lerobot/lerobot$ ^C
+(lerobot) bfl3@BFLMACHINE:~/bfl_works/new_lerobot/lerobot$ python -m lerobot.scripts.train   --policy.path=smolvla_base   --dataset.repo_id=/home/bfl3/bfl_works/new_lerobot/lerobot/latest-so101arm-data-backup   --batch_size=32   --steps=20000   --output_dir=outputs/train/my_smolvla1   --job_name=my_smolvla_training1   --policy.device=cuda   --wandb.enable=false --policy.push_to_hub=false
+WARNING 2025-07-10 11:52:32 deo_utils.py:36 'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+WARNING 2025-07-10 11:52:33 deo_utils.py:36 'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+INFO 2025-07-10 11:52:33 ts/train.py:111 {'batch_size': 32,
+ 'dataset': {'episodes': None,
+             'image_transforms': {'enable': False,
+                                  'max_num_transforms': 3,
+                                  'random_order': False,
+                                  'tfs': {'brightness': {'kwargs': {'brightness': [0.8,
+                                                                                   1.2]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'contrast': {'kwargs': {'contrast': [0.8,
+                                                                               1.2]},
+                                                       'type': 'ColorJitter',
+                                                       'weight': 1.0},
+                                          'hue': {'kwargs': {'hue': [-0.05,
+                                                                     0.05]},
+                                                  'type': 'ColorJitter',
+                                                  'weight': 1.0},
+                                          'saturation': {'kwargs': {'saturation': [0.5,
+                                                                                   1.5]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'sharpness': {'kwargs': {'sharpness': [0.5,
+                                                                                 1.5]},
+                                                        'type': 'SharpnessJitter',
+                                                        'weight': 1.0}}},
+             'repo_id': '/home/bfl3/bfl_works/new_lerobot/lerobot/latest-so101arm-data-backup',
+             'revision': None,
+             'root': None,
+             'use_imagenet_stats': True,
+             'video_backend': 'pyav'},
+ 'env': None,
+ 'eval': {'batch_size': 50, 'n_episodes': 50, 'use_async_envs': False},
+ 'eval_freq': 10000,
+ 'job_name': 'my_smolvla_training1',
+ 'log_freq': 200,
+ 'num_workers': 4,
+ 'optimizer': {'betas': [0.9, 0.95],
+               'eps': 1e-08,
+               'grad_clip_norm': 10.0,
+               'lr': 0.0001,
+               'type': 'adamw',
+               'weight_decay': 1e-10},
+ 'output_dir': 'outputs/train/my_smolvla1',
+ 'policy': {'adapt_to_pi_aloha': False,
+            'add_image_special_tokens': False,
+            'attention_mode': 'cross_attn',
+            'chunk_size': 50,
+            'device': 'cuda',
+            'empty_cameras': 0,
+            'expert_width_multiplier': 0.75,
+            'freeze_vision_encoder': True,
+            'input_features': {'observation.image': {'shape': [3, 256, 256],
+                                                     'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.image2': {'shape': [3, 256, 256],
+                                                      'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.image3': {'shape': [3, 256, 256],
+                                                      'type': <FeatureType.VISUAL: 'VISUAL'>},
+                               'observation.state': {'shape': [6],
+                                                     'type': <FeatureType.STATE: 'STATE'>}},
+            'license': None,
+            'load_vlm_weights': True,
+            'max_action_dim': 32,
+            'max_period': 4.0,
+            'max_state_dim': 32,
+            'min_period': 0.004,
+            'n_action_steps': 50,
+            'n_obs_steps': 1,
+            'normalization_mapping': {'ACTION': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'STATE': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'VISUAL': <NormalizationMode.IDENTITY: 'IDENTITY'>},
+            'num_expert_layers': 0,
+            'num_steps': 10,
+            'num_vlm_layers': 16,
+            'optimizer_betas': [0.9, 0.95],
+            'optimizer_eps': 1e-08,
+            'optimizer_grad_clip_norm': 10.0,
+            'optimizer_lr': 0.0001,
+            'optimizer_weight_decay': 1e-10,
+            'output_features': {'action': {'shape': [6],
+                                           'type': <FeatureType.ACTION: 'ACTION'>}},
+            'pad_language_to': 'max_length',
+            'prefix_length': 0,
+            'private': None,
+            'push_to_hub': False,
+            'repo_id': None,
+            'resize_imgs_with_padding': [512, 512],
+            'scheduler_decay_lr': 2.5e-06,
+            'scheduler_decay_steps': 30000,
+            'scheduler_warmup_steps': 1000,
+            'self_attn_every_n_layers': 2,
+            'tags': None,
+            'tokenizer_max_length': 48,
+            'train_expert_only': True,
+            'train_state_proj': True,
+            'type': 'smolvla',
+            'use_amp': False,
+            'use_cache': True,
+            'use_delta_joint_actions_aloha': False,
+            'vlm_model_name': 'HuggingFaceTB/SmolVLM2-500M-Video-Instruct'},
+ 'resume': False,
+ 'save_checkpoint': True,
+ 'save_freq': 5000,
+ 'scheduler': {'decay_lr': 2.5e-06,
+               'num_decay_steps': 30000,
+               'num_warmup_steps': 1000,
+               'peak_lr': 0.0001,
+               'type': 'cosine_decay_with_warmup'},
+ 'seed': 1000,
+ 'steps': 20000,
+ 'use_policy_training_preset': True,
+ 'wandb': {'disable_artifact': False,
+           'enable': False,
+           'entity': None,
+           'mode': None,
+           'notes': None,
+           'project': 'lerobot',
+           'run_id': None}}
+INFO 2025-07-10 11:52:33 ts/train.py:117 Logs will be saved locally.
+INFO 2025-07-10 11:52:33 ts/train.py:127 Creating dataset
+Resolving data files: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 50/50 [00:00<00:00, 645277.54it/s]
+INFO 2025-07-10 11:52:34 ts/train.py:138 Creating policy
+You have video processor config saved in `preprocessor.json` file which is deprecated. Video processor configs should be saved in their own `video_preprocessor.json` file. You can rename the file or load and save the processor back which renames it automatically. Loading from `preprocessor.json` will be removed in v5.0.
+Loading  HuggingFaceTB/SmolVLM2-500M-Video-Instruct weights ...
+INFO 2025-07-10 11:52:40 modeling.py:991 We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
+nvtop
+Reducing the number of VLM layers to 16 ...
+Loading weights from local directory
+[standardise_state_dict] 'normalize_inputs.buffer_observation_state.mean'  ←  ['normalize_inputs.so100-red_buffer_observation_state.mean', 'normalize_inputs.so100_buffer_observation_state.mean']
+[standardise_state_dict] 'normalize_inputs.buffer_observation_state.std'  ←  ['normalize_inputs.so100-red_buffer_observation_state.std', 'normalize_inputs.so100_buffer_observation_state.std']
+[standardise_state_dict] 'normalize_targets.buffer_action.mean'  ←  ['normalize_targets.so100-red_buffer_action.mean', 'normalize_targets.so100_buffer_action.mean']
+[standardise_state_dict] 'normalize_targets.buffer_action.std'  ←  ['normalize_targets.so100-red_buffer_action.std', 'normalize_targets.so100_buffer_action.std']
+[standardise_state_dict] 'unnormalize_outputs.buffer_action.mean'  ←  ['unnormalize_outputs.so100-red_buffer_action.mean', 'unnormalize_outputs.so100_buffer_action.mean']
+[standardise_state_dict] 'unnormalize_outputs.buffer_action.std'  ←  ['unnormalize_outputs.so100-red_buffer_action.std', 'unnormalize_outputs.so100_buffer_action.std']
+INFO 2025-07-10 11:52:49 ts/train.py:144 Creating optimizer and scheduler
+INFO 2025-07-10 11:52:49 ts/train.py:156 Output dir: outputs/train/my_smolvla1
+INFO 2025-07-10 11:52:49 ts/train.py:159 cfg.steps=20000 (20K)
+INFO 2025-07-10 11:52:49 ts/train.py:160 dataset.num_frames=44893 (45K)
+INFO 2025-07-10 11:52:49 ts/train.py:161 dataset.num_episodes=50
+INFO 2025-07-10 11:52:49 ts/train.py:162 num_learnable_params=99880992 (100M)
+INFO 2025-07-10 11:52:49 ts/train.py:163 num_total_params=450046212 (450M)
+INFO 2025-07-10 11:52:49 ts/train.py:202 Start offline training on a fixed dataset
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 11:55:32 ts/train.py:232 step:200 smpl:6K ep:7 epch:0.14 loss:0.049 grdn:0.611 lr:1.0e-05 updt_s:0.807 data_s:0.006
+INFO 2025-07-10 11:58:14 ts/train.py:232 step:400 smpl:13K ep:14 epch:0.29 loss:0.027 grdn:0.409 lr:3.0e-05 updt_s:0.809 data_s:0.000
+INFO 2025-07-10 12:00:57 ts/train.py:232 step:600 smpl:19K ep:21 epch:0.43 loss:0.026 grdn:0.462 lr:5.0e-05 updt_s:0.814 data_s:0.000
+INFO 2025-07-10 12:03:38 ts/train.py:232 step:800 smpl:26K ep:29 epch:0.57 loss:0.026 grdn:0.464 lr:7.0e-05 updt_s:0.801 data_s:0.000
+INFO 2025-07-10 12:06:20 ts/train.py:232 step:1K smpl:32K ep:36 epch:0.71 loss:0.027 grdn:0.470 lr:9.0e-05 updt_s:0.810 data_s:0.000
+INFO 2025-07-10 12:09:01 ts/train.py:232 step:1K smpl:38K ep:43 epch:0.86 loss:0.027 grdn:0.474 lr:1.0e-04 updt_s:0.807 data_s:0.000
+INFO 2025-07-10 12:11:47 ts/train.py:232 step:1K smpl:45K ep:50 epch:1.00 loss:0.026 grdn:0.438 lr:1.0e-04 updt_s:0.828 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 12:14:31 ts/train.py:232 step:2K smpl:51K ep:57 epch:1.14 loss:0.025 grdn:0.414 lr:9.9e-05 updt_s:0.814 data_s:0.005
+INFO 2025-07-10 12:17:13 ts/train.py:232 step:2K smpl:58K ep:64 epch:1.28 loss:0.024 grdn:0.406 lr:9.9e-05 updt_s:0.809 data_s:0.000
+INFO 2025-07-10 12:19:55 ts/train.py:232 step:2K smpl:64K ep:71 epch:1.43 loss:0.022 grdn:0.379 lr:9.9e-05 updt_s:0.807 data_s:0.000
+INFO 2025-07-10 12:22:35 ts/train.py:232 step:2K smpl:70K ep:78 epch:1.57 loss:0.021 grdn:0.362 lr:9.9e-05 updt_s:0.801 data_s:0.000
+INFO 2025-07-10 12:25:15 ts/train.py:232 step:2K smpl:77K ep:86 epch:1.71 loss:0.021 grdn:0.345 lr:9.9e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 12:27:54 ts/train.py:232 step:3K smpl:83K ep:93 epch:1.85 loss:0.020 grdn:0.349 lr:9.8e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 12:30:34 ts/train.py:232 step:3K smpl:90K ep:100 epch:2.00 loss:0.019 grdn:0.336 lr:9.8e-05 updt_s:0.797 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 12:33:14 ts/train.py:232 step:3K smpl:96K ep:107 epch:2.14 loss:0.019 grdn:0.321 lr:9.8e-05 updt_s:0.797 data_s:0.005
+INFO 2025-07-10 12:35:54 ts/train.py:232 step:3K smpl:102K ep:114 epch:2.28 loss:0.018 grdn:0.310 lr:9.7e-05 updt_s:0.795 data_s:0.000
+INFO 2025-07-10 12:38:33 ts/train.py:232 step:3K smpl:109K ep:121 epch:2.42 loss:0.018 grdn:0.300 lr:9.7e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 12:41:13 ts/train.py:232 step:4K smpl:115K ep:128 epch:2.57 loss:0.017 grdn:0.308 lr:9.7e-05 updt_s:0.801 data_s:0.000
+INFO 2025-07-10 12:43:53 ts/train.py:232 step:4K smpl:122K ep:135 epch:2.71 loss:0.017 grdn:0.295 lr:9.6e-05 updt_s:0.799 data_s:0.000
+INFO 2025-07-10 12:46:33 ts/train.py:232 step:4K smpl:128K ep:143 epch:2.85 loss:0.017 grdn:0.298 lr:9.6e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 12:49:14 ts/train.py:232 step:4K smpl:134K ep:150 epch:2.99 loss:0.016 grdn:0.296 lr:9.6e-05 updt_s:0.803 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 12:51:55 ts/train.py:232 step:4K smpl:141K ep:157 epch:3.14 loss:0.016 grdn:0.284 lr:9.5e-05 updt_s:0.801 data_s:0.005
+INFO 2025-07-10 12:54:38 ts/train.py:232 step:5K smpl:147K ep:164 epch:3.28 loss:0.015 grdn:0.284 lr:9.5e-05 updt_s:0.813 data_s:0.000
+INFO 2025-07-10 12:57:20 ts/train.py:232 step:5K smpl:154K ep:171 epch:3.42 loss:0.015 grdn:0.279 lr:9.4e-05 updt_s:0.809 data_s:0.000
+INFO 2025-07-10 13:00:00 ts/train.py:232 step:5K smpl:160K ep:178 epch:3.56 loss:0.015 grdn:0.275 lr:9.4e-05 updt_s:0.799 data_s:0.000
+INFO 2025-07-10 13:00:00 ts/train.py:241 Checkpoint policy after step 5000
+INFO 2025-07-10 13:02:40 ts/train.py:232 step:5K smpl:166K ep:185 epch:3.71 loss:0.014 grdn:0.261 lr:9.3e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:05:21 ts/train.py:232 step:5K smpl:173K ep:192 epch:3.85 loss:0.014 grdn:0.264 lr:9.3e-05 updt_s:0.801 data_s:0.000
+INFO 2025-07-10 13:08:01 ts/train.py:232 step:6K smpl:179K ep:200 epch:3.99 loss:0.014 grdn:0.259 lr:9.2e-05 updt_s:0.801 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 13:10:43 ts/train.py:232 step:6K smpl:186K ep:207 epch:4.13 loss:0.014 grdn:0.263 lr:9.2e-05 updt_s:0.802 data_s:0.005
+INFO 2025-07-10 13:13:23 ts/train.py:232 step:6K smpl:192K ep:214 epch:4.28 loss:0.014 grdn:0.261 lr:9.1e-05 updt_s:0.802 data_s:0.000
+INFO 2025-07-10 13:16:03 ts/train.py:232 step:6K smpl:198K ep:221 epch:4.42 loss:0.013 grdn:0.260 lr:9.0e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:18:42 ts/train.py:232 step:6K smpl:205K ep:228 epch:4.56 loss:0.013 grdn:0.250 lr:9.0e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:21:22 ts/train.py:232 step:7K smpl:211K ep:235 epch:4.70 loss:0.013 grdn:0.248 lr:8.9e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:24:01 ts/train.py:232 step:7K smpl:218K ep:242 epch:4.85 loss:0.013 grdn:0.249 lr:8.8e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:26:41 ts/train.py:232 step:7K smpl:224K ep:249 epch:4.99 loss:0.012 grdn:0.238 lr:8.8e-05 updt_s:0.797 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 13:29:22 ts/train.py:232 step:7K smpl:230K ep:257 epch:5.13 loss:0.012 grdn:0.241 lr:8.7e-05 updt_s:0.796 data_s:0.005
+INFO 2025-07-10 13:32:01 ts/train.py:232 step:7K smpl:237K ep:264 epch:5.27 loss:0.012 grdn:0.233 lr:8.6e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 13:34:41 ts/train.py:232 step:8K smpl:243K ep:271 epch:5.42 loss:0.012 grdn:0.237 lr:8.6e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:37:20 ts/train.py:232 step:8K smpl:250K ep:278 epch:5.56 loss:0.012 grdn:0.223 lr:8.5e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:39:59 ts/train.py:232 step:8K smpl:256K ep:285 epch:5.70 loss:0.012 grdn:0.233 lr:8.4e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:42:39 ts/train.py:232 step:8K smpl:262K ep:292 epch:5.85 loss:0.011 grdn:0.218 lr:8.3e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:45:18 ts/train.py:232 step:8K smpl:269K ep:299 epch:5.99 loss:0.011 grdn:0.218 lr:8.3e-05 updt_s:0.796 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 13:47:58 ts/train.py:232 step:9K smpl:275K ep:307 epch:6.13 loss:0.011 grdn:0.238 lr:8.2e-05 updt_s:0.795 data_s:0.005
+INFO 2025-07-10 13:50:37 ts/train.py:232 step:9K smpl:282K ep:314 epch:6.27 loss:0.011 grdn:0.206 lr:8.1e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:53:17 ts/train.py:232 step:9K smpl:288K ep:321 epch:6.42 loss:0.011 grdn:0.222 lr:8.0e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:55:56 ts/train.py:232 step:9K smpl:294K ep:328 epch:6.56 loss:0.010 grdn:0.205 lr:7.9e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 13:58:35 ts/train.py:232 step:9K smpl:301K ep:335 epch:6.70 loss:0.010 grdn:0.203 lr:7.9e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:01:15 ts/train.py:232 step:10K smpl:307K ep:342 epch:6.84 loss:0.010 grdn:0.202 lr:7.8e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:03:54 ts/train.py:232 step:10K smpl:314K ep:349 epch:6.99 loss:0.010 grdn:0.198 lr:7.7e-05 updt_s:0.795 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 14:06:34 ts/train.py:232 step:10K smpl:320K ep:356 epch:7.13 loss:0.010 grdn:0.207 lr:7.6e-05 updt_s:0.795 data_s:0.005
+INFO 2025-07-10 14:06:34 ts/train.py:241 Checkpoint policy after step 10000
+INFO 2025-07-10 14:09:14 ts/train.py:232 step:10K smpl:326K ep:364 epch:7.27 loss:0.009 grdn:0.203 lr:7.5e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:11:54 ts/train.py:232 step:10K smpl:333K ep:371 epch:7.41 loss:0.009 grdn:0.201 lr:7.4e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:14:33 ts/train.py:232 step:11K smpl:339K ep:378 epch:7.56 loss:0.010 grdn:0.198 lr:7.3e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:17:12 ts/train.py:232 step:11K smpl:346K ep:385 epch:7.70 loss:0.009 grdn:0.193 lr:7.2e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:19:52 ts/train.py:232 step:11K smpl:352K ep:392 epch:7.84 loss:0.009 grdn:0.191 lr:7.2e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:22:31 ts/train.py:232 step:11K smpl:358K ep:399 epch:7.98 loss:0.009 grdn:0.192 lr:7.1e-05 updt_s:0.796 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 14:25:11 ts/train.py:232 step:11K smpl:365K ep:406 epch:8.13 loss:0.009 grdn:0.189 lr:7.0e-05 updt_s:0.795 data_s:0.005
+INFO 2025-07-10 14:27:50 ts/train.py:232 step:12K smpl:371K ep:413 epch:8.27 loss:0.008 grdn:0.177 lr:6.9e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:30:30 ts/train.py:232 step:12K smpl:378K ep:421 epch:8.41 loss:0.009 grdn:0.185 lr:6.8e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:33:09 ts/train.py:232 step:12K smpl:384K ep:428 epch:8.55 loss:0.008 grdn:0.175 lr:6.7e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:35:48 ts/train.py:232 step:12K smpl:390K ep:435 epch:8.70 loss:0.008 grdn:0.184 lr:6.6e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:38:28 ts/train.py:232 step:12K smpl:397K ep:442 epch:8.84 loss:0.008 grdn:0.184 lr:6.5e-05 updt_s:0.796 data_s:0.000
+INFO 2025-07-10 14:41:07 ts/train.py:232 step:13K smpl:403K ep:449 epch:8.98 loss:0.008 grdn:0.179 lr:6.4e-05 updt_s:0.797 data_s:0.000
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+        - Avoid using `tokenizers` before the fork if possible
+        - Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/bfl3/miniconda3/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:5: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-07-10 14:43:48 ts/train.py:232 step:13K smpl:410K ep:456 epch:9.12 loss:0.008 grdn:0.173 lr:6.3e-05 updt_s:0.797 data_s:0.005
+INFO 2025-07-10 14:46:27 ts/train.py:232 step:13K smpl:416K ep:463 epch:9.27 loss:0.008 grdn:0.177 lr:6.2e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 14:49:08 ts/train.py:232 step:13K smpl:422K ep:470 epch:9.41 loss:0.008 grdn:0.170 lr:6.1e-05 updt_s:0.802 data_s:0.000
+INFO 2025-07-10 14:51:48 ts/train.py:232 step:13K smpl:429K ep:478 epch:9.55 loss:0.007 grdn:0.167 lr:6.0e-05 updt_s:0.801 data_s:0.000
+INFO 2025-07-10 14:54:28 ts/train.py:232 step:14K smpl:435K ep:485 epch:9.69 loss:0.007 grdn:0.171 lr:5.9e-05 updt_s:0.797 data_s:0.000
+INFO 2025-07-10 14:57:09 ts/train.py:232 step:14K smpl:442K ep:492 epch:9.84 loss:0.007 grdn:0.157 lr:5.8e-05 updt_s:0.804 data_s:0.000
+INFO 2025-07-10 14:59:50 ts/train.py:232 step:14K smpl:448

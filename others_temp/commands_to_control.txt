@@ -1,0 +1,38 @@
+
+
+python -m lerobot.teleoperate \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, left: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true
+
+
+
+python -m lerobot.record \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM1 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, left: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
+    --teleop.type=so101_leader \
+    --teleop.port=/dev/ttyACM0 \
+    --teleop.id=my_awesome_leader_arm \
+    --display_data=true
+    --dataset.repo_id=july5/record-test \
+    --dataset.num_episodes=50 \
+    --dataset.single_task="Pick up the battery and place it into the cup"
+    --dataset.push_to_hub=False --dataset.episode_time_s=60  --dataset.reset_time_s=10
+
+python -m lerobot.record \
+    --robot.type=so101_follower \
+    --robot.port=/dev/ttyACM0 \
+    --robot.id=my_awesome_follower_arm \
+    --robot.cameras="{ front: {type: opencv, index_or_path: 0, width: 640, height: 480, fps: 30}, left: {type: opencv, index_or_path: 2, width: 640, height: 480, fps: 30}}" \
+    --dataset.repo_id=july10/eval_so101 \
+    --dataset.num_episodes=5 \
+    --dataset.single_task="Pick up the battery and place it into the cup"
+    --dataset.push_to_hub=False --dataset.episode_time_s=60 \
+    --policy.path= "/home/bfl3/bfl_works/new_lerobot/lerobot/outputs/train/my_smolvla1/checkpoints/last/pretrained_model"

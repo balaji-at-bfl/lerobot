@@ -183,7 +183,6 @@ class Normalize(nn.Module):
                 raise ValueError(norm_mode)
         return batch
 
-
 class Unnormalize(nn.Module):
     """
     Similar to `Normalize` but unnormalizes output data (e.g. `{"action": torch.randn(b,c)}`) in their
