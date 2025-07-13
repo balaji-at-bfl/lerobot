@@ -28,6 +28,18 @@ class Robot:
         self.feedback_port = 30004
         self.target_Tool = 1
 
+        # --- LeRobot Features ---
+        self.observation_features = {
+            "camera_top": {"shape": (480, 640, 3), "type": "uint8"},
+            "camera_wrist": {"shape": (480, 640, 3), "type": "uint8"},
+            "state": {"shape": (6,), "type": "float32"},
+            "gripper_state": {"shape": (1,), "type": "float32"},
+        }
+        self.action_features = {
+            "pose": {"shape": (6,), "type": "float32"},
+            "gripper": {"shape": (1,), "type": "float32"},
+        }
+
         # --- Threading and State Management ---
         self.current_pose = [0.0] * 6
         self.current_angles = [0.0] * 6

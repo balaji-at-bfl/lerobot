@@ -6,52 +6,23 @@ import socket
 import threading
 from queue import Queue
 import traceback  # Useful for debugging
-
+import numpy as np
 # Assuming these are your custom utility classes
-from dobot import Robot
-from camera_utils import Camera
-from record import RecordData
-
-
-# --- Recorder Worker Function (runs in a separate thread) ---
-def recorder_worker(queue, record_obj):
-    """
-    This function runs in the background, consuming data from the queue
-    and performing the slow I/O operations (writing video and CSV).
-    """
-    print("Recorder thread started.")
-    while True:
-        try:
-            data_packet = queue.get()
-
-            if data_packet is None:
-                print("Sentinel received. Recorder thread shutting down.")
-                break
-
-            timestamp, top_frame, wrist_frame, obs_pose, obs_angles, obs_gripper, actions_p, action_gripper = data_packet
-
-            record_obj.collect_data_point(timestamp, top_frame, wrist_frame, obs_pose, obs_angles, obs_gripper,
-                                          actions_p, action_gripper)
-        except Exception as e:
-            print(f"Error in recorder thread: {e}")
-            break
-
-    print("Closing recording files...")
-    record_obj.close_data_recording()
-    print("Recording files closed.")
-
-
+from dobot_updated import Robot
+from camera_utils_updated import Camera
+from lerobot.datasets.lerobot_dataset import LeRobotDataset
+from lerobot.datasets.utils import build_dataset_frame, hw_to_dataset_features
+import pygame
+import time
+import socket
+import threading
+from queue import Queue
 # --- Main Application ---
 # --- Configuration ---
 TARGET_HZ = 15  # Let's aim for a slightly higher, more responsive rate
 target_period = 1 / TARGET_HZ
 episode_num = "0140"
 task = "Take out all the items from the basket and place it on the table"
-base_path = "dobot_data/02_July_pick_place_colored_boxes/obs_data"
-csv_filename = f"episode_{episode_num}_robot_log_basket"
-top_video_filename = f"episode_{episode_num}_top_video_basket"
-wrist_video_filename = f"episode_{episode_num}_wrist_video_basket"
-
 # --- Pygame Joystick Configuration ---
 DEAD_ZONE = 0.55
 # --- NEW: Velocity-based control parameters ---
@@ -61,8 +32,6 @@ MAX_ANGULAR_VELOCITY = 35.0  # Max speed in degrees/s
 # --- Initialize Objects ---
 r_obj = Robot()
 c_obj = Camera()
-record_obj = RecordData(task, c_obj)
-
 # --- Setup Connections and Recordings ---
 r_obj.connect()  # This now also starts the robot's feedback thread
 c_obj.start_capture()  # Manually start the camera capture thread
@@ -90,18 +59,17 @@ else:
     print("Connect joystick first")
     # Consider exiting if joystick is essential
     # exit()
+# --- LeRobot Dataset Configuration ---
+action_features = hw_to_dataset_features(r_obj.action_features, "action")
+obs_features = hw_to_dataset_features(r_obj.observation_features, "observation")
+dataset_features = {**action_features, **obs_features}
 
-# --- Setup Threading for Recording ---
-data_queue = Queue()
-record_obj.setup_data_recording(
-    base_path=base_path,
-    csv_filename=csv_filename,
-    top_video_filename=top_video_filename,
-    wrist_video_filename=wrist_video_filename
+dataset = LeRobotDataset.create(
+    "dobot_dataset",
+    TARGET_HZ,
+    features=dataset_features,
+    robot_type="dobot",
 )
-recorder_thread = threading.Thread(target=recorder_worker, args=(data_queue, record_obj))
-recorder_thread.start()
-
 # --- Main Control Loop ---
 running = True
 total_timestamp = 0
@@ -121,7 +89,13 @@ try:
         obs_pose, obs_angles = r_obj.get_data()
         obs_gripper = r_obj.suction_on
         top_frame, wrist_frame = c_obj.capture_frames()
-
+        observation = {
+            "camera_top": top_frame,
+            "camera_wrist": wrist_frame,
+            "state": np.array(obs_pose),
+            "gripper_state": np.array([obs_gripper]),
+        }
+        observation_frame = build_dataset_frame(dataset.features, observation, prefix="observation")
         # --- Event Polling ---
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -170,16 +144,12 @@ try:
         # If no joystick, the command_pose simply stays where it is.
         action_gripper = r_obj.suction_on
         # action_a = r_obj.get_action_angles(command_pose)
-
+        action = {"pose": np.array(command_pose), "gripper": np.array([action_gripper])}
+        action_frame = build_dataset_frame(dataset.features, action, prefix="action")
         # --- Send the calculated ideal pose to the robot (NON-BLOCKING) ---
         r_obj.send_actions(*command_pose)
-
-        # --- Put all data into the queue for the recorder thread ---
-        # We log the observation (obs_*) and the command we sent (command_pose)
-        data_packet = (
-        total_timestamp, top_frame, wrist_frame, obs_pose, obs_angles, obs_gripper, command_pose, action_gripper)
-        data_queue.put(data_packet)
-
+        frame = {**observation_frame, **action_frame}
+        dataset.add_frame(frame, task=task)
         # --- FPS Control ---
         work_duration = time.perf_counter() - loop_start_time
         sleep_duration = target_period - work_duration
@@ -197,21 +167,10 @@ finally:
     # --- Graceful Shutdown Sequence ---
     print("\nMain loop finished. Starting graceful shutdown.")
     pygame.quit()
-
+    dataset.save_episode()
     # 1. Stop the camera thread and close pipelines
     if 'c_obj' in locals():
         c_obj.close()
-
-    # 2. Signal the recorder thread to stop by sending the 'None' sentinel
-    if 'data_queue' in locals():
-        data_queue.put(None)
-
-    # 3. Wait for the recorder thread to finish processing all items
-    if 'recorder_thread' in locals() and recorder_thread.is_alive():
-        print("Waiting for recorder thread to finish...")
-        recorder_thread.join()  # This prevents data loss
-        print("Recorder thread finished.")
-
     # 4. Now that all data is saved, disconnect the robot
     if 'r_obj' in locals():
         r_obj.disconnect()
