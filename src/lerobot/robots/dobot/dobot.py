@@ -1,8 +1,8 @@
-# --- START OF FILE dobot.py ---
-
-from dobot_api.dobot_api import DobotApiDashboard, DobotApiMove
-import traceback
 import time
+import numpy as np
+from lerobot.robots.robot import Robot
+from dobot_api import DobotApiDashboard, DobotApiMove
+import traceback
 from enum import IntEnum
 import re
 import threading
@@ -14,9 +14,9 @@ class RobotMode(IntEnum):
     ERROR = 4  # Added for completeness, check actual Dobot API for more modes
 
 
-class Robot:
-    def __init__(self, robot_ip="192.168.5.11"):
-        self.ip = robot_ip
+class Dobot(Robot):
+    def __init__(self, cfg):
+        self.ip = cfg.ip_address
         self.dashboard = None
         self.move = None
         self.feedback = None
@@ -34,6 +34,7 @@ class Robot:
         self._state_lock = threading.Lock()
         self._feedback_thread = None
         self._is_running_feedback = False
+        self.connect()
 
     def _connect_dashboard(self):
         self.dashboard = DobotApiDashboard(self.ip, self.dashboard_port)
@@ -146,7 +147,7 @@ class Robot:
                 self._feedback_thread.join()
             print("Robot feedback thread stopped.")
 
-    def get_data(self):
+    def get_observation(self):
         """This method gets pose of the robot and joint angles from shared state."""
         with self._state_lock:
             # Return copies to prevent race conditions if the caller modifies the list
@@ -168,7 +169,7 @@ class Robot:
         self.initialize()
         self.start_feedback()
 
-    def disconnect(self):
+    def close(self):
         self.stop_feedback()
         if self.dashboard:
             try:
@@ -179,19 +180,13 @@ class Robot:
             except Exception as e:
                 print(f"Error disabling robot: {e}")
 
-    # --- CRITICAL MODIFICATION: Use non-blocking send ---
-    def send_actions(self, x, y, z, rx, ry, rz):
+    def apply_action(self, action):
         """
         Sends the ServoP command without waiting for a reply to avoid blocking the
         main control loop. This is a "fire-and-forget" approach suitable for
         high-frequency teleoperation.
         """
-        self.move.ServoP(x, y, z, rx, ry, rz) # This is the original BLOCKING call
-
-        # # Construct the command string manually
-        # command_str = f"ServoP({x:.4f},{y:.4f},{z:.4f},{rx:.4f},{ry:.4f},{rz:.4f})"
-        # # Use the low-level send_data which does not wait for a reply
-        # self.move.send_data(command_str)
+        self.move.ServoP(action[0], action[1], action[2], action[3], action[4], action[5])
 
     def toggle_gripper(self):
         if not self.suction_on:
