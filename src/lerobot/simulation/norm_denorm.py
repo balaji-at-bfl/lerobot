@@ -14,16 +14,19 @@ class RobotJointController:
         'elbow_flex': (-1.69, 1.69),
         'wrist_flex': (-1.65806, 1.65806),
         'wrist_roll': (-2.74385, 2.84121),
-        'gripper': (-0.17453, 1.74533),
+        'gripper': (-100, 100),
     }
 
-    def __init__(self, target_min=-100, target_max=100):
+    def __init__(self, target_min=-100, target_max=100, gripper_min=-0.17453, gripper_max=1.74533):
         """
         Initializes the controller and pre-computes arrays for vectorized operations.
         """
         self.target_min = target_min
         self.target_max = target_max
         self.target_range = target_max - target_min
+        self.gripper_min = gripper_min
+        self.gripper_max = gripper_max
+        self.gripper_range = gripper_max - gripper_min
 
         # --- Setup for array-based operations ---
         # 1. Establish a fixed joint order
@@ -47,8 +50,12 @@ class RobotJointController:
             min_orig, max_orig = self.JOINT_RANGES_MAP[joint_name]
             original_range = max_orig - min_orig
             
-            scaled_value = self.target_min + (angle - min_orig) * (self.target_range / original_range)
-            normalized_angles[joint_name] = np.clip(scaled_value, self.target_min, self.target_max)
+            if joint_name == 'gripper':
+                scaled_value = self.gripper_min + (angle - min_orig) * (self.gripper_range / original_range)
+                normalized_angles[joint_name] = np.clip(scaled_value, self.gripper_min, self.gripper_max)
+            else:
+                scaled_value = self.target_min + (angle - min_orig) * (self.target_range / original_range)
+                normalized_angles[joint_name] = np.clip(scaled_value, self.target_min, self.target_max)
         return normalized_angles
 
     def _unnormalize(self, normalized_angles: dict[str, float]) -> dict[str, float]:
@@ -60,9 +67,13 @@ class RobotJointController:
 
             min_orig, max_orig = self.JOINT_RANGES_MAP[joint_name]
             original_range = max_orig - min_orig
-            norm_value = np.clip(norm_value, self.target_min, self.target_max)
 
-            original_value = min_orig + (norm_value - self.target_min) * (original_range / self.target_range)
+            if joint_name == 'gripper':
+                norm_value = np.clip(norm_value, self.gripper_min, self.gripper_max)
+                original_value = min_orig + (norm_value - self.gripper_min) * (original_range / self.gripper_range)
+            else:
+                norm_value = np.clip(norm_value, self.target_min, self.target_max)
+                original_value = min_orig + (norm_value - self.target_min) * (original_range / self.target_range)
             original_angles[joint_name] = original_value
         return original_angles
 

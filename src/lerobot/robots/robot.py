@@ -57,6 +57,11 @@ class Robot(abc.ABC):
     def __str__(self) -> str:
         return f"{self.id} {self.__class__.__name__}"
 
+    @classmethod
+    def from_sim(cls, *args, **kwargs):
+        # This is a placeholder and should be implemented by subclasses that support simulation
+        raise NotImplementedError("This robot does not support being loaded from a simulation.")
+
     # TODO(aliberts): create a proper Feature class for this that links with datasets
     @property
     @abc.abstractmethod

@@ -37,6 +37,13 @@ def make_robot_from_config(config: RobotConfig) -> Robot:
         from .so101_follower import SO101Follower
 
         return SO101Follower(config)
+    elif config.type == "sim_101":
+        from .sim_101 import Sim101
+        import mujoco
+        # TODO(vikashplus): Make the model path configurable
+        model = mujoco.MjModel.from_xml_path("lerobot/src/lerobot/simulation/SO101/scene.xml")
+        data = mujoco.MjData(model)
+        return Sim101.from_sim(config, model, data)
     elif config.type == "lekiwi":
         from .lekiwi import LeKiwi
 

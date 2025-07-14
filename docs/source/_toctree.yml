@@ -31,6 +31,8 @@
     title: Koch v1.1
   - local: lekiwi
     title: LeKiwi
+  - local: sim_101
+    title: Sim-101
   title: "Robots"
 - sections:
   - local: notebooks

@@ -1,0 +1,63 @@
+# Sim-101 Robot and Teleoperator
+
+The `sim-101` robot is a simulated version of the SO-101 follower arm, designed to work within the `lerobot` framework. It uses the MuJoCo physics engine to simulate the robot's behavior and can be controlled by a teleoperator. This document provides an overview of the `sim-101` robot and teleoperator, and explains how to use them.
+
+## Features
+
+- **Realistic Simulation**: The `sim-101` robot uses a MuJoCo model of the SO-101 follower arm, providing a realistic simulation of the robot's kinematics and dynamics.
+- **Normalized Joint Control**: The robot uses a `RobotJointController` to normalize and denormalize joint angles, making it easy to control the robot with a variety of teleoperators. The gripper range has been adjusted to match the teleoperator's range.
+- **Teleoperator Compatibility**: The `sim-101` robot is designed to work with any `lerobot`-compatible teleoperator. The example script now uses the `SO101Leader` arm as a teleoperator.
+- **Improved Simulation Speed**: The simulation timestep has been adjusted to provide smoother and faster movements.
+- **Extensible**: The `sim-101` robot and teleoperator can be easily extended to support new features, such as different teleoperators, camera configurations, and simulation environments.
+
+## File Structure
+
+The `sim-101` robot and teleoperator are organized into the following file structure:
+
+```
+lerobot/
+└── src/
+    └── lerobot/
+        ├── robots/
+        │   └── sim_101/
+        │       ├── __init__.py
+        │       ├── config_sim_101.py
+        │       └── sim_101.py
+        ├── teleoperators/
+        │   └── sim_101/
+        │       ├── __init__.py
+        │       ├── config_sim_101.py
+        │       ├── teleop_sim_101.py
+        │       └── teleop_keyboard_sim_101.py
+        └── simulation/
+            ├── norm_denorm.py
+            └── SO101/
+                └── scene.xml
+```
+
+- **`robots/sim_101`**: Contains the implementation of the `sim-101` robot.
+  - `config_sim_101.py`: The configuration file for the robot.
+  - `sim_101.py`: The main robot class, which handles the MuJoCo simulation and joint control.
+- **`teleoperators/sim_101`**: Contains the implementation of the `sim-101` teleoperator.
+  - `config_sim_101.py`: The configuration file for the teleoperator.
+  - `teleop_sim_101.py`: The main teleoperator class, which generates random actions for the robot (for demonstration).
+  - `teleop_keyboard_sim_101.py`: A keyboard-based teleoperator for controlling the robot.
+- **`simulation`**: Contains the simulation assets.
+  - `norm_denorm.py`: The `RobotJointController` class, which handles joint normalization.
+  - `SO101/scene.xml`: The MuJoCo model of the SO-101 follower arm, with adjusted timestep.
+
+## How to Use
+
+To use the `sim-101` robot and teleoperator, you can run the example script located at `lerobot/examples/sim_101/teleoperate.py`. This script will:
+
+1.  Instantiate the `sim-101` robot and the `SO101Leader` teleoperator.
+2.  Connect to the robot and teleoperator.
+3.  Enter a loop that reads an action from the teleoperator, sends it to the robot, and logs the data.
+
+To run the example, execute the following command from the root of the `lerobot` directory:
+
+```bash
+python lerobot/examples/sim_101/teleoperate.py
+```
+
+This will launch a MuJoCo viewer showing the simulated robot being controlled by your `so101_leader` arm.
