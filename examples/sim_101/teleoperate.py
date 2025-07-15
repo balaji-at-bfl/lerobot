@@ -5,7 +5,7 @@ from lerobot.teleoperators.so101_leader import SO101Leader, SO101LeaderConfig
 from lerobot.utils.robot_utils import busy_wait
 from lerobot.utils.visualization_utils import _init_rerun, log_rerun_data
 
-FPS = 30
+FPS = 60
 
 # Create the robot and teleoperator configurations
 robot_config = Sim101Config(id="sim_101_robot")

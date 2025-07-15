@@ -14,7 +14,7 @@ class RobotJointController:
         'elbow_flex': (-1.69, 1.69),
         'wrist_flex': (-1.65806, 1.65806),
         'wrist_roll': (-2.74385, 2.84121),
-        'gripper': (-100, 100),
+        'gripper': (-0.17453, 1.74532),
     }
 
     def __init__(self, target_min=-100, target_max=100, gripper_min=-0.17453, gripper_max=1.74533):

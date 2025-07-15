@@ -22,7 +22,7 @@ from typing import Any
 import numpy as np
 import mujoco
 import mujoco.viewer
-from lerobot.cameras.utils import make_cameras_from_configs
+# from lerobot.cameras.utils import make_cameras_from_configs this will call the built-in function to make cameras but we use simulated cameras.
 from lerobot.errors import DeviceAlreadyConnectedError, DeviceNotConnectedError
 from lerobot.simulation.norm_denorm import RobotJointController
 
@@ -50,7 +50,7 @@ class Sim101(Robot):
         self.data = data
         self.viewer = None
         
-        self.cameras = make_cameras_from_configs(config.cameras)
+        self.cameras = {"front":"camera_front", "gripper": "camera_gripper"}
 
     @classmethod
     def from_sim(cls, config: Sim101Config, model: mujoco.MjModel, data: mujoco.MjData):
@@ -88,6 +88,9 @@ class Sim101(Robot):
                 # TODO(vikashplus): Make the model path configurable
                 self.model = mujoco.MjModel.from_xml_path("lerobot/src/lerobot/simulation/SO101/scene.xml")
                 self.data = mujoco.MjData(self.model)
+                self.renderer = mujoco.Renderer(self.model, 480, 640) #for getting camera input.
+                mujoco.mj_resetDataKeyframe(self.model, self.data, self.model.key("home").id)
+                mujoco.mj_forward(self.model, self.data)
 
             self.viewer = mujoco.viewer.launch_passive(self.model, self.data)
 
@@ -135,7 +138,8 @@ class Sim101(Robot):
             start = time.perf_counter()
             # TODO(vikashplus): Implement image capture from MuJoCo
             # For now, returning a black image
-            obs_dict[cam_key] = np.zeros((cam.height, cam.width, 3), dtype=np.uint8)
+            self.renderer.update_scene(self.data, camera=cam)
+            obs_dict[cam_key] = self.renderer.render()
             dt_ms = (time.perf_counter() - start) * 1e3
             logger.debug(f"{self} read {cam_key}: {dt_ms:.1f}ms")
 
