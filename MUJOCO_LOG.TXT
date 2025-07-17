@@ -1,3 +1,12 @@
 Fri Jul 11 15:34:44 2025
 WARNING: mju_openResource: unknown file '/home/bfl3/bfl_works/new_lerobot/lerobot/simulation/SO101/so101_new_calib_quat.xml'
 
+Tue Jul 15 16:59:20 2025
+WARNING: mju_openResource: unknown file 'lerobot/src/lerobot/simulation/SO101/scene.xml'
+
+Tue Jul 15 17:01:46 2025
+WARNING: mju_openResource: unknown file '/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/simulation/SO101/../furniture_sim/simpleTable/simpleTable_asset.xml'
+
+Tue Jul 15 17:03:55 2025
+WARNING: mju_openResource: unknown file 'lerobot/src/lerobot/simulation/SO101/scene.xml'
+

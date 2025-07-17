@@ -9,7 +9,7 @@ FPS = 60
 
 # Create the robot and teleoperator configurations
 robot_config = Sim101Config(id="sim_101_robot")
-teleop_config = SO101LeaderConfig(id="so101_leader_arm", port="/dev/ttyACM0")
+teleop_config = SO101LeaderConfig(id="my_awesome_leader_arm", port="/dev/ttyACM0")
 
 robot = Sim101(robot_config)
 teleop = SO101Leader(teleop_config)
@@ -27,6 +27,7 @@ while True:
 
     observation = robot.get_observation()
     action = teleop.get_action()
+    #print(action["gripper.pos"]) 
 
     log_rerun_data(observation, action)
 

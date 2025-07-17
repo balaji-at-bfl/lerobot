@@ -7,6 +7,7 @@ from pprint import pformat
 import draccus
 import rerun as rr
 
+from lerobot.robots.sim_101 import Sim101, Sim101Config
 from lerobot.cameras.opencv.configuration_opencv import OpenCVCameraConfig  # noqa: F401
 from lerobot.cameras.realsense.configuration_realsense import RealSenseCameraConfig  # noqa: F401
 from lerobot.robots import (  # noqa: F401
@@ -80,8 +81,9 @@ def teleoperate(cfg: TeleoperateConfig):
     if cfg.display_data:
         _init_rerun(session_name="teleoperation")
 
+    robot_config = Sim101Config(id="sim_101_robot") # directly specifying the robot not from cli
     teleop = make_teleoperator_from_config(cfg.teleop)
-    robot = make_robot_from_config(cfg.robot)
+    robot = Sim101(robot_config)# use this one also make_robot_from_config(cfg.robot)
 
     teleop.connect()
     robot.connect()

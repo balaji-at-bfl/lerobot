@@ -32,7 +32,7 @@
   </default>
   <worldbody>
     <!-- Link base -->
-     <camera name="camera_front" pos="1.4 0 1.1" euler= "0 0.7 1.57" />
+     <camera name="camera_front" pos="1.6 0.1 1.6" euler= "0 0.93 1.57" />
     <body name="base" pos="-0.37 0 0.81" quat="1 0 0 0" childclass="so101_new_calib">
       <inertial pos="0.0137179 -5.19711e-05 0.0334843" mass="0.147" fullinertia="0.000114686 0.000136117 0.000130364 -4.59787e-07 4.97151e-06 9.75275e-08"/>
       <!-- Part base_motor_holder_so101_v1 -->
@@ -99,7 +99,7 @@
               <!-- Link gripper -->
               <body name="gripper" pos="5.55112e-17 -0.0611 0.0181" quat="0.0172091 -0.0172091 0.706897 0.706897">
                 <!-- Joint from wrist to gripper -->
-                 <camera name="camera_gripper" pos="0 0.09 0.07" euler= "-0.4 0 0" />
+                 <camera name="camera_gripper" pos="0 0.25 0.16" euler= "-0.6 0 0" />
                 <joint axis="0 0 1" name="wrist_roll" type="hinge" range="-2.7438472969992493 2.841206309382605" class="sts3215"/>
                 <inertial pos="0.000213627 0.000245138 -0.025187" mass="0.087" fullinertia="2.75087e-05 4.33657e-05 3.45059e-05 -3.35241e-07 -5.7352e-06 -5.17847e-08"/>
                 <!-- Part sts3215_03a_v1_5 -->
@@ -125,30 +125,10 @@
         </body>
       </body>
     </body>
-    <body name="cup" pos="-0.09 0.1 0.86" childclass="grab">
-      <freejoint/>
-      <include file="../cup/body.xml"/>
-    </body>
-        <body name="table" pos="0.2 0.1 0.05" childclass="grab">
-      <include file="../furniture_sim/simpleTable/simpleWoodTable_body.xml" />
-    </body>
+
 
   </worldbody>
   <asset>
-    <mesh name="cup" file="../cup/cup.stl"/>
-    <mesh name="table" file="../table/table.stl"/>
-    <mesh name="contact0" file="../cup/contact0.stl"/>
-    <mesh name="contact1" file="../cup/contact1.stl"/>
-    <mesh name="contact2" file="../cup/contact2.stl"/>
-    <mesh name="contact3" file="../cup/contact3.stl"/>
-    <mesh name="contact4" file="../cup/contact4.stl"/>
-    <mesh name="contact5" file="../cup/contact5.stl"/>
-    <mesh name="contact6" file="../cup/contact6.stl"/>
-    <mesh name="contact7" file="../cup/contact7.stl"/>
-    <mesh name="contact8" file="../cup/contact8.stl"/>
-    <mesh name="contact9" file="../cup/contact9.stl"/>
-    <mesh name="contact10" file="../cup/contact10.stl"/>
-    <mesh name="contact11" file="../cup/contact11.stl"/>
     <mesh file="assets/waveshare_mounting_plate_so101_v2.stl"/>
     <mesh file="assets/sts3215_03a_v1.stl"/>
     <mesh file="assets/motor_holder_so101_base_v1.stl"/>
@@ -185,7 +165,7 @@
     <position class="sts3215" name="gripper" joint="gripper" forcerange="-3.35 3.35" ctrlrange="-0.17453 1.74533"/>
   </actuator>
   <equality/>
-  <keyframe>
+  <!-- <keyframe>
 <key name="home" qpos="0 -1.75 1.57 1.18 0 -0.174 -0.09 0.1 0.86 0 0 0 0" ctrl="0 0 0 0 0 0"/>
-</keyframe>
+</keyframe> -->
 </mujoco>

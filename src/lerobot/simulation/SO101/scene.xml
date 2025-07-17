@@ -1,6 +1,7 @@
 <mujoco model="scene">
     <include file="so101_new_calib_quat.xml" />
 
+
     <option timestep="0.01" />
 
     <visual>
@@ -17,10 +18,52 @@
             markrgb="0.8 0.8 0.8" width="300" height="300" />
         <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5"
             reflectance="0.2" />
+            <mesh name="cup" file="../cup/cup.stl"/>
+        <mesh name="table" file="../table/table.stl"/>
+        <mesh name="contact0" file="../cup/contact0.stl"/>
+        <mesh name="contact1" file="../cup/contact1.stl"/>
+        <mesh name="contact2" file="../cup/contact2.stl"/>
+        <mesh name="contact3" file="../cup/contact3.stl"/>
+        <mesh name="contact4" file="../cup/contact4.stl"/>
+        <mesh name="contact5" file="../cup/contact5.stl"/>
+        <mesh name="contact6" file="../cup/contact6.stl"/>
+        <mesh name="contact7" file="../cup/contact7.stl"/>
+        <mesh name="contact8" file="../cup/contact8.stl"/>
+        <mesh name="contact9" file="../cup/contact9.stl"/>
+        <mesh name="contact10" file="../cup/contact10.stl"/>
+        <mesh name="contact11" file="../cup/contact11.stl"/>
+        <mesh name="cube_contact0" file="../cubesmall/contact0.stl"/>
+        <mesh name="cubesmall" file="../cubesmall/cubesmall.stl"/>
+        <mesh name="mug" file="../mug/mug.stl"/>
+        <mesh name="m_contact0" file="../mug/contact0.stl"/>
+        <mesh name="m_contact1" file="../mug/contact1.stl"/>
+        <mesh name="m_contact2" file="../mug/contact2.stl"/>
+        <mesh name="m_contact3" file="../mug/contact3.stl"/>
+        <mesh name="m_contact4" file="../mug/contact4.stl"/>
+        <mesh name="m_contact5" file="../mug/contact5.stl"/>
+        <mesh name="m_contact6" file="../mug/contact6.stl"/>
+        <mesh name="m_contact7" file="../mug/contact7.stl"/>
+        <mesh name="m_contact8" file="../mug/contact8.stl"/>
+        <mesh name="m_contact9" file="../mug/contact9.stl"/>
+        <mesh name="m_contact10" file="../mug/contact10.stl"/>
+        <mesh name="m_contact11" file="../mug/contact11.stl"/>
+        <mesh name="m_contact12" file="../mug/contact12.stl"/>
+        <mesh name="m_contact13" file="../mug/contact13.stl"/>
     </asset>
 
     <worldbody>
         <light pos="0 0 3.5" dir="0 0 -1" directional="true" />
         <geom name="floor" size="0 0 0.05" pos="0 0 0" type="plane" material="groundplane" />
+    <body name="mug" pos="-0.09 0.1 0.86"  childclass="grab">
+      <freejoint/>
+      <include file="../mug/body.xml"/>
+    </body>
+        <body name="table" pos="0.2 0.1 0.05" childclass="grab">
+      <include file="../furniture_sim/simpleTable/simpleWoodTable_body.xml" />
+    </body>
+    <body name="cube small" pos="-0.09 0 0.86" childclass="grab">
+      <freejoint/>
+      <include file="../cubesmall/body.xml"/> 
+    </body>
     </worldbody>
 </mujoco>

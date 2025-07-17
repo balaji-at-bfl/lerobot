@@ -86,10 +86,9 @@ class Sim101(Robot):
         try:
             if self.model is None:
                 # TODO(vikashplus): Make the model path configurable
-                self.model = mujoco.MjModel.from_xml_path("lerobot/src/lerobot/simulation/SO101/scene.xml")
+                self.model = mujoco.MjModel.from_xml_path("/home/bfl3/bfl_works/new_lerobot/lerobot/src/lerobot/simulation/SO101/scene.xml")
                 self.data = mujoco.MjData(self.model)
                 self.renderer = mujoco.Renderer(self.model, 480, 640) #for getting camera input.
-                mujoco.mj_resetDataKeyframe(self.model, self.data, self.model.key("home").id)
                 mujoco.mj_forward(self.model, self.data)
 
             self.viewer = mujoco.viewer.launch_passive(self.model, self.data)
@@ -105,8 +104,7 @@ class Sim101(Robot):
         except Exception as e:
             raise DeviceNotConnectedError(f"Failed to connect to MuJoCo simulation: {e}")
 
-        for cam in self.cameras.values():
-            cam.connect()
+
 
     @property
     def is_calibrated(self) -> bool:
