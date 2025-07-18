@@ -1,0 +1,15 @@
+<mujoco model="pen_bowl_scene">
+    <compiler  angle="radian" meshdir="." autolimits="true"/>
+    <include file="../assets/SO101/so101_new_calib_quat.xml"/>
+    <include file="../assets/ycb/024_bowl/google_64k/model.xml"/>
+    <option timestep="0.001"/>
+    <include file="base_scene.xml"/>
+
+    <worldbody>
+        <body name="cube" pos="-0.3 0 0.05">
+            <geom type="box" size="0.01 0.01 0.01" rgba="0.8 0.2 0.2 1"/>
+            <joint type="free" name="cube_joint"/>
+        </body>
+    </worldbody>
+   
+</mujoco>
