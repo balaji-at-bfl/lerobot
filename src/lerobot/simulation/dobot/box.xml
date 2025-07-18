@@ -1,0 +1,19 @@
+<mujoco model="red_box">
+  <compiler angle="radian" />
+  <asset>
+    <material name="red_material" rgba="1 0 0 1"/>
+  </asset>
+  <worldbody>
+    <body name="box_body" pos="0.5 0 0.1"> <!-- Initial position above the ground -->
+      <freejoint/> <!-- Allows the box to be manipulated freely -->
+      <geom name="box_visual" type="box" size="0.09 0.09 0.09" material="red_material"/> <!-- 20cm box -->
+      <inertial mass="1" pos="0 0 0" diaginertia="0.00166667 0.00166667 0.00166667"/>
+    </body>
+  </worldbody>
+  <default>
+    <geom solref="0.02 1" solimp="0.9 0.99 0.003"/>
+  </default>
+  <option timestep="0.002"/>
+</mujoco>
+
+

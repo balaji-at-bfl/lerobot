@@ -1,0 +1,42 @@
+<mujoco model="stl_simulation">
+  <compiler angle="degree" inertiafromgeom="true"/>
+
+  <option integrator="Euler" timestep="0.002"/>
+
+  <worldbody>
+   
+
+
+    <!-- Import the STL file -->
+    <body name="stl_body" pos="1 0 0.1"> <!-- Adjust position as needed -->
+      <geom type="mesh" mesh="my_stl_mesh" rgba="0.7 0.7 0.7 1" /> <!-- Adjust color and appearance -->
+      <inertial mass="1" pos="0 0 0" diaginertia="0.1 0.1 0.1"/> <!-- Adjust inertia as needed. crucial for stability -->
+    </body>
+
+  </worldbody>
+
+  <!-- Define the mesh (STL) -->
+  <asset>
+    <mesh name="my_stl_mesh" file="meshes/suction_gripper01.stl" scale="0.0002 0.0002 0.0002"/> <!--  Adjust the path and scaling  -->
+  </asset>
+
+
+  <!-- Define actuators (optional) -->
+  <!-- This example adds a joint and actuator to move the STL -->
+  <!--
+  <joint name="stl_joint" type="free" body="stl_body"/>
+  <actuator>
+      <motor joint="stl_joint" gear="1 1 1 0 0 0" ctrlrange="-1 1"/>  Control the translation along xyz axes
+  </actuator>
+  -->
+
+
+  <!-- Define sensors (optional) -->
+  <!-- Example: Measure the position of the STL -->
+  <!--
+  <sensor>
+    <framepos name="stl_position" objtype="body" objname="stl_body"/>
+  </sensor>
+  -->
+
+</mujoco>
